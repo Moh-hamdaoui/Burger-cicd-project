@@ -84,7 +84,7 @@ jobs:
       - name: Run Playwright E2E tests
         run: npm run test:e2e
   
-  deploy:
+    deploy:
     name: Deploy to GCP
     runs-on: ubuntu-latest
     needs: e2e
@@ -109,4 +109,5 @@ jobs:
 
       - name: Run Ansible playbook to deploy
         run: |
-          ansible-playbook -i inventory.ini playbook.yml
+          ansible-playbook -i inventory.ini deploy.yml
+

@@ -4,7 +4,7 @@
 
   vars:
     project_repo: 'https://github.com/Moh-hamdaoui/Burger-cicd-project.git'
-    project_path: 'C:\Users\hamda\Desktop\EEMI-Project-FilRouge\web-app'
+    project_path: '/home/nextjs-ci-server/web-app'
     project_branch: 'main'
 
   tasks:
@@ -13,9 +13,29 @@
       file:
         path: "{{ project_path }}"
         state: directory
-        owner: khalidsahara345
-        group: khalidsahara345
+        owner: nextjs-ci-server
+        group: nextjs-ci-server
         mode: '0755'
+
+    - name: Install git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Install Node.js and npm
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+
+    - name: Install pm2 globally
+      npm:
+        name: pm2
+        global: yes
+        state: present
 
     - name: Clone the project
       git:
@@ -23,6 +43,8 @@
         dest: "{{ project_path }}"
         version: "{{ project_branch }}"
         force: yes
+        update: yes
+        accept_hostkey: yes
 
     - name: Install Node.js dependencies
       command: npm install
