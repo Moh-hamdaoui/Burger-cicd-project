@@ -16,12 +16,22 @@
         owner: khalidsahara345
         group: khalidsahara345
         mode: '0755'
+      become: no
 
     - name: Install git
       apt:
         name: git
         state: present
         update_cache: yes
+    
+    - name: Clone the project
+      git:
+        repo: "{{ project_repo }}"
+        dest: "{{ project_path }}"
+        version: "{{ project_branch }}"
+        force: yes
+        update: yes
+        accept_hostkey: yes
 
     - name: Install Node.js and npm
       apt:
@@ -36,15 +46,6 @@
         name: pm2
         global: yes
         state: present
-
-    - name: Clone the project
-      git:
-        repo: "{{ project_repo }}"
-        dest: "{{ project_path }}"
-        version: "{{ project_branch }}"
-        force: yes
-        update: yes
-        accept_hostkey: yes
 
     - name: Install Node.js dependencies
       command: npm install
