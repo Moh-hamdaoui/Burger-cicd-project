@@ -9,7 +9,8 @@
     "lint": "eslint",
     "test": "jest",
     "test:unit": "jest tests/unit --config jest.config.js",
-    "test:integration": "jest tests/integration --config jest.config.js"
+    "test:integration": "jest tests/integration --config jest.config.js",
+    "test:e2e": "playwright test --config=playwright.config.ts"
   },
   "dependencies": {
     "cors": "^2.8.5",

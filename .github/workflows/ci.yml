@@ -79,4 +79,4 @@ jobs:
           npx wait-on http://localhost:3000
 
       - name: Run Playwright E2E tests
-        run: npx playwright test --reporter=list
+        run: npm run test:e2e
