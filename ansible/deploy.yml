@@ -1,0 +1,40 @@
+- name: Deploy Next.js app on GCP VM
+  hosts: webserver
+  become: yes
+
+  vars:
+    project_repo: 'https://github.com/Moh-hamdaoui/Burger-cicd-project.git'
+    project_path: 'C:\Users\hamda\Desktop\EEMI-Project-FilRouge\web-app'
+    project_branch: 'main'
+
+  tasks:
+
+    - name: Ensure project directory exists
+      file:
+        path: "{{ project_path }}"
+        state: directory
+        owner: nextjs-ci-server
+        group: nextjs-ci-server
+        mode: '0755'
+
+    - name: Clone the project
+      git:
+        repo: "{{ project_repo }}"
+        dest: "{{ project_path }}"
+        version: "{{ project_branch }}"
+        force: yes
+
+    - name: Install Node.js dependencies
+      command: npm install
+      args:
+        chdir: "{{ project_path }}"
+
+    - name: Build Next.js project
+      command: npm run build
+      args:
+        chdir: "{{ project_path }}"
+
+    - name: Start or restart Next.js in production
+      command: pm2 restart next-app || pm2 start npm --name "next-app" -- run start
+      args:
+        chdir: "{{ project_path }}"
