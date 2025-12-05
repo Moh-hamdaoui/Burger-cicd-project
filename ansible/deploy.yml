@@ -13,8 +13,8 @@
       file:
         path: "{{ project_path }}"
         state: directory
-        owner: nextjs-ci-server
-        group: nextjs-ci-server
+        owner: khalidsahara345
+        group: khalidsahara345
         mode: '0755'
 
     - name: Clone the project
