@@ -39,7 +39,7 @@ export default function AdminChat() {
     });
   }, [router]);
 
-  // DEMANDE l’historique complet quand on sélectionne une conversation
+  // DEMANDE l historique complet quand on sélectionne une conversation
   useEffect(() => {
     if (active && !(messages[active]?.length)) {
       requestHistory(active);
