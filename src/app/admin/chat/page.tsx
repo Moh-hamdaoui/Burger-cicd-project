@@ -39,7 +39,7 @@ export default function AdminChat() {
     });
   }, [router]);
 
-  // ⬇️ DEMANDE l’historique complet quand on sélectionne une conversation
+  // DEMANDE l’historique complet quand on sélectionne une conversation
   useEffect(() => {
     if (active && !(messages[active]?.length)) {
       requestHistory(active);
@@ -48,7 +48,7 @@ export default function AdminChat() {
 
   const current = useMemo(() => (active ? messages[active] ?? [] : []), [active, messages]);
 
-  // ⬇️ Auto-scroll en bas quand la liste change
+  // Auto-scroll en bas quand la liste change
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: 1e9, behavior: 'smooth' });
   }, [current.length, active]);
